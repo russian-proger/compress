@@ -2,6 +2,7 @@
 
 EncoderBuffer:: EncoderBuffer():
     _begin(nullptr),
+    _seek (nullptr),
     _end  (nullptr) {}
 
 EncoderBuffer::~EncoderBuffer() {}
@@ -50,6 +51,7 @@ std::istream& operator>>(std::istream& in, EncoderBuffer& ebuf) {
     std::size_t size = static_cast<std::size_t>(getRemainingSize(in));
 
     ebuf._begin = new char[size];
+    ebuf._seek  = ebuf._begin;
     ebuf._end   = ebuf._begin + size;
 
     in.read(ebuf._begin, size);
@@ -58,8 +60,8 @@ std::istream& operator>>(std::istream& in, EncoderBuffer& ebuf) {
 }
 
 std::ostream& operator<<(std::ostream& out, EncoderBuffer& ebuf) {
-    if (ebuf._begin != nullptr) {
-        out.write(ebuf._begin, (ebuf._end - ebuf._begin));
+    if (ebuf._seek != nullptr) {
+        out.write(ebuf._seek, (ebuf._end - ebuf._seek));
     }
 
     return out;
@@ -67,9 +69,9 @@ std::ostream& operator<<(std::ostream& out, EncoderBuffer& ebuf) {
 
 
 EncoderBuffer& operator>>(EncoderBuffer& ebuf, int& var) {
-    if (ebuf._seek + sizeof(int) >= ebuf._end) {
-        throw "Error while scanning EncoderBuffer";
-    }
+    // if (ebuf._seek + sizeof(int) >= ebuf._end) {
+    //     throw "Error while scanning EncoderBuffer";
+    // }
 
     var = *reinterpret_cast<int*>(ebuf._seek);
     ebuf.seekg(sizeof(int), std::ios::cur);
