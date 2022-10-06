@@ -144,8 +144,9 @@ int main(int argc, char **argv)
     if (!extract_mode)
     {
         // Compress mode
-        int a;
-        input_ebuf >> Data((char*)&a, sizeof(a));
+		Data data;
+		data.size = sizeof(int);
+        input_ebuf >> data;
         output_ebuf = input_ebuf;
     }
     else
