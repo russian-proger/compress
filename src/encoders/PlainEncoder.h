@@ -2,7 +2,7 @@
 #include "../Encoder.h"
 #include "../EncoderBuffer.h"
 
-class HaffmanEncoder : public Encoder {
+class PlainEncoder : public Encoder {
     EncoderBuffer encode() override;
     EncoderBuffer decode() override;
 };

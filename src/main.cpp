@@ -1,6 +1,6 @@
 #include "main.h"
-// #include "EncoderBuffer.h"
-// #include "encoders/HaffmanEncoder.h"
+#include "EncoderBuffer.h"
+#include "encoders/Encoders.h"
 
 void print_help()
 {
@@ -144,7 +144,9 @@ int main(int argc, char **argv)
     if (!extract_mode)
     {
         // Compress mode
-        // Encoder encoder = HaffmanEncoder();
+        int a;
+        input_ebuf >> a;
+        output_ebuf = input_ebuf;
     }
     else
     {
