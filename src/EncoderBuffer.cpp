@@ -66,12 +66,12 @@ std::ostream& operator<<(std::ostream& out, EncoderBuffer& ebuf) {
 }
 
 
-EncoderBuffer& operator>>(EncoderBuffer& ebuf, int& var) {
-    if (ebuf._seek + sizeof(int) >= ebuf._end) {
+EncoderBuffer& operator>>(EncoderBuffer& ebuf, Data data) {
+    if (ebuf._seek + data.size >= ebuf._end) {
         throw "Error while scanning EncoderBuffer";
     }
 
-    var = *reinterpret_cast<int*>(ebuf._seek);
-    ebuf.seekg(sizeof(int), std::ios::cur);
+    data.ptr = ebuf._seek;
+    ebuf.seekg(data.size, std::ios::cur);
     return ebuf;
 }

@@ -145,7 +145,7 @@ int main(int argc, char **argv)
     {
         // Compress mode
         int a;
-        input_ebuf >> a;
+        input_ebuf >> Data((char*)&a, sizeof(a));
         output_ebuf = input_ebuf;
     }
     else

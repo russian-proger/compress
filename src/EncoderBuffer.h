@@ -21,5 +21,5 @@ public:
     friend std::istream& operator>>(std::istream&, EncoderBuffer&);
     friend std::ostream& operator<<(std::ostream&, EncoderBuffer&);
 
-    friend EncoderBuffer& operator>>(EncoderBuffer&, int&);
+    friend EncoderBuffer& operator>>(EncoderBuffer&, Data data);
 };
