@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include "Utilities.h"
-#include "AtomBuffer.h"
 
 class EncoderBuffer{
 private:
@@ -22,5 +21,5 @@ public:
     friend std::istream& operator>>(std::istream&, EncoderBuffer&);
     friend std::ostream& operator<<(std::ostream&, EncoderBuffer&);
 
-    friend EncoderBuffer& operator>>(EncoderBuffer&, AtomBuffer&);
+    friend EncoderBuffer& operator>>(EncoderBuffer&, int&);
 };
