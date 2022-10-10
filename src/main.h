@@ -1,6 +1,6 @@
 #include <bits/stdc++.h>
 #include "Utilities.h"
-#include "Encoder.h"
+#include "Compressor.h"
 
 enum class FLAG {
     NONE,

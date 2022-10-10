@@ -1,15 +1,17 @@
 #pragma once
 
+#include <assert.h>
 #include <iostream>
+#include <sstream>
 #include "Utilities.h"
 
-class EncoderBuffer{
+class Buffer {
 private:
     char* _begin, * _seek, * _end;
 
 public:
-    EncoderBuffer();
-    ~EncoderBuffer();
+    Buffer();
+    ~Buffer();
 
     char* begin() const;
     char* seek() const;
@@ -18,8 +20,8 @@ public:
     void seekg(std::streamsize, std::ios_base::seekdir);
     void reset();
 
-    friend std::istream& operator>>(std::istream&, EncoderBuffer&);
-    friend std::ostream& operator<<(std::ostream&, EncoderBuffer&);
+    friend std::istream& operator>>(std::istream&, Buffer&);
+    friend std::ostream& operator<<(std::ostream&, Buffer&);
 
-    friend EncoderBuffer& operator>>(EncoderBuffer&, int&);
+    friend Buffer& operator>>(Buffer&, int&);
 };

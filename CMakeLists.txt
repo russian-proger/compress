@@ -4,9 +4,15 @@ project(compress)
 
 add_executable(compress
     src/Utilities.cpp
-    src/EncoderBuffer.cpp
-    src/Encoder.cpp
-    src/encoders/HaffmanEncoder.cpp
-    src/encoders/PlainEncoder.cpp
+    src/Buffer.cpp
+    src/Compressor.cpp
+    src/compressors/HaffmanCompressor.cpp
+    src/compressors/PlainCompressor.cpp
     src/main.cpp
 )
+
+if (CMAKE_BUILD_TYPE)
+    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
+        add_definitions(-DDEBUG)
+    endif()
+endif()

@@ -1,6 +1,6 @@
 #include "main.h"
-#include "EncoderBuffer.h"
-#include "encoders/Encoders.h"
+#include "Buffer.h"
+#include "compressors/Compressors.h"
 
 void print_help()
 {
@@ -24,7 +24,7 @@ int main(int argc, char **argv)
     std::ifstream ifile;    // Input stream
     std::ofstream ofile;    // Output stream
 
-    EncoderBuffer
+    Buffer
         input_ebuf ,  // To read from ifile
         output_ebuf;  // To write to  ofile
 

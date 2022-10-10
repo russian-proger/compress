@@ -1,5 +1,6 @@
 #!/bin/bash
 
 BASEDIR=$(dirname $(realpath $0))
+cd $BASEDIR/..
 
-$BASEDIR/../build/compress assets/data.txt -o assets/data.cmp
+./build/compress assets/data.txt -o assets/data.cmp
