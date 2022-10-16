@@ -12,9 +12,9 @@ struct T {
     T(int o){a = new int(o);}
 };
 
-void F(T t) {
-    *t.a = 1;
+void F(vector<int> vi) {
+    vi[1] = 4;
 }
-
 int main () {
+    
 };

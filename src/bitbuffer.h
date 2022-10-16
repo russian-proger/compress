@@ -13,10 +13,14 @@ public:
     BitBuffer();
     ~BitBuffer();
 
+    BitBuffer Clone();
     void SetData(std::vector<char>* data);
+    std::vector<char> GetData();
 
     bool Get(size_t index) const;
     void Set(size_t index, bool value);
+
+    void Reset();
 
     size_t GetSize() const;
     size_t GetSeek() const;
@@ -26,5 +30,9 @@ public:
     void SetSize(size_t size);
     void Clear();
 
+    void Append(bool value);
+
     bool operator[](size_t index) const;
+    friend BitBuffer& operator<<(BitBuffer& bit_buffer, bool value);
+    friend BitBuffer& operator<<(BitBuffer& destination, BitBuffer source);
 };

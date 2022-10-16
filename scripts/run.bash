@@ -3,4 +3,4 @@
 BASEDIR=$(dirname $(realpath $0))
 cd $BASEDIR/..
 
-./build/compress assets/data.txt -o assets/data.cmp
+./build/compress assets/main.cpp -o assets/main.txt

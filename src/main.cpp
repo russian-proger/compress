@@ -140,7 +140,6 @@ int main(int argc, char **argv)
         printf("\033[1;31mError while reading:\033[0m %s", e.what());
         return 0;
     }
-
     if (!extract_mode)
     {
         // Compress mode
@@ -153,11 +152,11 @@ int main(int argc, char **argv)
             
             if (ind <= compressors.size()) {
 
-                compressors[ind-1]->SetBuffer(buffer.Clone());
+                compressors[ind]->SetBuffer(buffer.Clone());
 
                 buffer.Clear();
                 buffer << Atomic::Make((char)ind);
-                buffer << (compressors[ind-1]->Compress());
+                buffer << (compressors[ind]->Compress());
 
             }
         }
@@ -173,10 +172,10 @@ int main(int argc, char **argv)
         while (*atomic.GetData() != 0) {
             assert(*atomic.GetData() <= compressors.size());
             
-            compressors[*atomic.GetData()-1]->SetBuffer(buffer.Clone());
+            compressors[*atomic.GetData()]->SetBuffer(buffer.Clone());
             
             buffer.Clear();
-            buffer << compressors[*atomic.GetData()-1]->Compress();
+            buffer << compressors[*atomic.GetData()]->Decompress();
             buffer >> atomic;
         }
 

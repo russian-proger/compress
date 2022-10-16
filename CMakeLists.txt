@@ -18,3 +18,5 @@ if (CMAKE_BUILD_TYPE)
         add_definitions(-DDEBUG)
     endif()
 endif()
+
+add_definitions(-O3)
