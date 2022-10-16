@@ -1,12 +1,12 @@
-#include "Utilities.h"
+#include "utilities.h"
 
-bool exists(std::string fname) {
+bool Exists(std::string fname) {
     std::ifstream file;
     file.open(fname);
     return (bool)file;
 }
 
-std::streamsize getRemainingSize(std::istream& stream) {
+std::streamsize GetRemainingSize(std::istream& stream) {
     std::streampos streampos = stream.tellg();
     stream.seekg(0, std::ios::end);
 

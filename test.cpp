@@ -16,12 +16,5 @@ void F(T t) {
 }
 
 int main () {
-    char* t = new char[4];
-    int v = 257;
-    // memcpy(t, &v, sizeof(int));
-    t = (char*)&v;
-
-    for (int i = 0; i < 4; ++i) {
-        cout << (int)t[i] << ' ';
-    }
+    cout << sizeof(void);
 };

@@ -1,6 +1,6 @@
 #include "main.h"
-#include "Buffer.h"
-#include "compressors/Compressors.h"
+#include "buffer.h"
+#include "compressors/compressors.h"
 
 void print_help()
 {
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
         return 0;
     }
 
-    if (!exists(ipath))
+    if (!Exists(ipath))
     {
         printf("\033[1;31mError:\033[0m Input file doesn't exist\n");
         return 0;
@@ -144,10 +144,9 @@ int main(int argc, char **argv)
     if (!extract_mode)
     {
         // Compress mode
-        int a;
-        input_ebuf >> a;
+        Atomic atomic(sizeof(int));
+        input_ebuf >> atomic;
         output_ebuf = input_ebuf;
-        
     }
     else
     {

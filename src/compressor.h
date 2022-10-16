@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Buffer.h"
+#include "buffer.h"
 
 enum ALGORITHM_TYPE {
     PLAIN_TEXT,
@@ -12,16 +12,16 @@ enum ALGORITHM_TYPE {
 
 class Compressor {
 protected:
-    Buffer _buffer;
+    Buffer buffer_;
 
 public:
     Compressor();
     Compressor(Buffer);
     ~Compressor();
 
-    virtual Buffer   compress();
-    virtual Buffer decompress();
+    virtual Buffer   Compress();
+    virtual Buffer Decompress();
 
-    void setBuffer(Buffer);
-    Buffer getBuffer();
+    void SetBuffer(Buffer);
+    Buffer GetBuffer();
 };
