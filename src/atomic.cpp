@@ -11,14 +11,14 @@ Atomic::Atomic(char size) {
 }
 
 Atomic::~Atomic() {
-    this->free();
+    this->Free();
 }
 
-bool Atomic::empty() {
+bool Atomic::Empty() {
     return this->data_ == nullptr || this->size_ == 0;
 }
 
-void Atomic::free() {
+void Atomic::Free() {
     if (this->data_ != nullptr) {
         delete[] this->data_;
         this->data_ = nullptr;
@@ -26,24 +26,24 @@ void Atomic::free() {
     }
 }
 
-char* Atomic::getData() {
+char* Atomic::GetData() {
     return this->data_;
 }
 
-char Atomic::getSize() {
+char Atomic::GetSize() {
     return this->size_;
 }
 
-void Atomic::setSize(char size) {
+void Atomic::SetSize(char size) {
     this->size_ = size;
 }
 
-void Atomic::setData(char* data) {
+void Atomic::SetData(char* data) {
     this->data_ = data;
 }
 
-void Atomic::resize(char size) {
-    this->free();
+void Atomic::Resize(char size) {
+    this->Free();
     this->data_ = reinterpret_cast<char*>(malloc(size));
     this->size_ = size;
 }

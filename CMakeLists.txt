@@ -6,6 +6,7 @@ add_executable(compress
     src/utilities.cpp
     src/atomic.cpp
     src/buffer.cpp
+    src/bitbuffer.cpp
     src/compressor.cpp
     src/compressors/haffman_compressor.cpp
     src/compressors/plain_compressor.cpp

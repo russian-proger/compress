@@ -95,12 +95,12 @@ std::ostream& operator<<(std::ostream& out, Buffer& buffer) {
 }
 
 Buffer& operator>>(Buffer& buffer, Atomic& atomic) {
-    buffer.Read(atomic.getData(), atomic.getSize());
+    buffer.Read(atomic.GetData(), atomic.GetSize());
     return buffer;
 }
 
 Buffer& operator<<(Buffer& buffer, Atomic  atomic) {
-    buffer.Append(atomic.getData(), atomic.getSize());
+    buffer.Append(atomic.GetData(), atomic.GetSize());
     return buffer;
 }
 

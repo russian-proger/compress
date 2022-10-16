@@ -12,21 +12,21 @@ public:
     Atomic(char size);
     ~Atomic();
 
-    void  free();
-    bool  empty();
-    char* getData();
-    char  getSize();
-    void  setData(char* data);
-    void  setSize(char  size);
-    void  resize(char size);
+    void  Free();
+    bool  Empty();
+    char* GetData();
+    char  GetSize();
+    void  SetData(char* data);
+    void  SetSize(char  size);
+    void  Resize(char size);
 
     template<typename Atom>
     static Atomic Make(Atom atom) {
         Atomic atomic;
-        atomic.setData(reinterpret_cast<char*>(malloc(sizeof(Atom))));
-        atomic.setSize(sizeof(Atom));
+        atomic.SetData(reinterpret_cast<char*>(malloc(sizeof(Atom))));
+        atomic.SetSize(sizeof(Atom));
 
-        memcpy(atomic.getData(), &atom, sizeof(Atom));
+        memcpy(atomic.GetData(), &atom, sizeof(Atom));
 
         return atomic;
     }

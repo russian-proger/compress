@@ -170,13 +170,13 @@ int main(int argc, char **argv)
         Buffer buffer = input_buffer;
         buffer >> atomic;
 
-        while (*atomic.getData() != 0) {
-            assert(*atomic.getData() <= compressors.size());
+        while (*atomic.GetData() != 0) {
+            assert(*atomic.GetData() <= compressors.size());
             
-            compressors[*atomic.getData()-1]->SetBuffer(buffer.Clone());
+            compressors[*atomic.GetData()-1]->SetBuffer(buffer.Clone());
             
             buffer.Clear();
-            buffer << compressors[*atomic.getData()-1]->Compress();
+            buffer << compressors[*atomic.GetData()-1]->Compress();
             buffer >> atomic;
         }
 
