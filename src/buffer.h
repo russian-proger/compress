@@ -22,6 +22,8 @@ public:
     Buffer();
     ~Buffer();
 
+    Buffer Clone();
+
     char* At(size_t index);
     char* AtCurrent();
     char* GetPointerBegin();
@@ -30,6 +32,9 @@ public:
     size_t GetSize() const;
     size_t GetSeek() const;
     size_t GetLeft() const;
+
+    void SetSeek(size_t seek);
+    void SetSize(size_t size);
 
     void Read (char* destination, size_t size);
     void Write(char* source,      size_t size);

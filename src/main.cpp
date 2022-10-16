@@ -25,8 +25,8 @@ int main(int argc, char **argv)
     std::ofstream ofile;    // Output stream
 
     Buffer
-        input_ebuf ,  // To read from ifile
-        output_ebuf;  // To write to  ofile
+        input_buffer ,  // To read from ifile
+        output_buffer;  // To write to  ofile
 
     // True if needed to extract compressed file
     bool extract_mode = false;
@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 
     try {
         ifile.open(ipath, std::ios::binary);
-        ifile >> input_ebuf;
+        ifile >> input_buffer;
         ifile.close();
     }
     catch (const std::exception &e) {
@@ -145,8 +145,17 @@ int main(int argc, char **argv)
     {
         // Compress mode
         Atomic atomic(sizeof(int));
-        input_ebuf >> atomic;
-        output_ebuf = input_ebuf;
+        input_buffer >> atomic;
+
+        for (char alg_code : algorithm_order) {
+            int ind = (int)alg_code - '1';
+            // input_buffer
+            if (ind < compressors.size()) {
+                // compressors[ind]->SetBuffer(output_buffer.Clone());
+                // output_buffer = (compressors[ind]->Compress());
+            }
+        }
+        output_buffer = input_buffer.Clone();
     }
     else
     {
@@ -155,7 +164,7 @@ int main(int argc, char **argv)
 
     try {
         ofile.open(opath, std::ios::binary);
-        ofile << output_ebuf;
+        ofile << output_buffer;
         ofile.close();
     }
     catch (const std::exception &e) {

@@ -3,6 +3,13 @@
 Buffer:: Buffer(): seek_(0){}
 Buffer::~Buffer(){}
 
+Buffer Buffer::Clone() {
+    Buffer buffer;
+    buffer.seek_ = this->seek_;
+    buffer.data_.assign(this->data_.begin(), this->data_.end());
+    return buffer;
+}
+
 void Buffer::Reserve(size_t size) {
     this->data_.resize(this->GetSize() + size);
 }
@@ -33,6 +40,18 @@ size_t Buffer::GetSeek() const {
 
 size_t Buffer::GetLeft() const {
     return this->GetSize() - this->GetSeek();
+}
+
+void Buffer::SetSeek(size_t seek) {
+    assert(0 <= seek && seek <= this->GetSize());
+    this->seek_ = seek;
+}
+
+void Buffer::SetSize(size_t size) {
+    this->data_.resize(size);
+
+    if (this->seek_ > size)
+        this->seek_ = size;
 }
 
 void Buffer::Read(char* destination, size_t size) {
