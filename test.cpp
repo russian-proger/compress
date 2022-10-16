@@ -1,8 +1,9 @@
 #include <iomanip>
 #include <iostream>
+#include <bitset>
+#include <memory.h>
 #include <sys/time.h>
 #include <vector>
-#include <memory.h>
 
 using namespace std;
 
@@ -16,5 +17,4 @@ void F(T t) {
 }
 
 int main () {
-    cout << sizeof(void);
 };

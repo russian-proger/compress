@@ -1,6 +1,6 @@
 #pragma once
-#include "../compressor.h"
 #include "../buffer.h"
+#include "../compressor.h"
 
 class HaffmanCompressor : public Compressor {
     Buffer   Compress() override;
