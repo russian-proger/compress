@@ -144,22 +144,43 @@ int main(int argc, char **argv)
     if (!extract_mode)
     {
         // Compress mode
-        Atomic atomic(sizeof(int));
-        input_buffer >> atomic;
+
+        Buffer buffer;
+        buffer << Atomic::Make((char)0) << input_buffer;
 
         for (char alg_code : algorithm_order) {
-            int ind = (int)alg_code - '1';
-            // input_buffer
-            if (ind < compressors.size()) {
-                // compressors[ind]->SetBuffer(output_buffer.Clone());
-                // output_buffer = (compressors[ind]->Compress());
+            int ind = (int)alg_code - '0';
+            
+            if (ind <= compressors.size()) {
+
+                compressors[ind-1]->SetBuffer(buffer.Clone());
+
+                buffer.Clear();
+                buffer << Atomic::Make((char)ind);
+                buffer << (compressors[ind-1]->Compress());
+
             }
         }
-        output_buffer = input_buffer.Clone();
-    }
-    else
-    {
 
+        output_buffer = buffer;
+    }
+    else {
+        Atomic atomic = Atomic::Make((char)0);
+        
+        Buffer buffer = input_buffer;
+        buffer >> atomic;
+
+        while (*atomic.getData() != 0) {
+            assert(*atomic.getData() <= compressors.size());
+            
+            compressors[*atomic.getData()-1]->SetBuffer(buffer.Clone());
+            
+            buffer.Clear();
+            buffer << compressors[*atomic.getData()-1]->Compress();
+            buffer >> atomic;
+        }
+
+        output_buffer = buffer;
     }
 
     try {

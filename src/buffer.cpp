@@ -15,19 +15,19 @@ void Buffer::Reserve(size_t size) {
 }
 
 char* Buffer::At(size_t index) {
-    return this->GetPointerBegin() + index;
+    return this->data_.data() + index;
+}
+
+char* Buffer::AtBegin() {
+    return this->At(0);
 }
 
 char* Buffer::AtCurrent() {
     return this->At(this->seek_);
 }
 
-char* Buffer::GetPointerBegin() {
-    return this->data_.data();
-}
-
-char* Buffer::GetPointerEnd() {
-    return this->GetPointerBegin() + this->GetSize();
+char* Buffer::AtEnd() {
+    return this->At(this->GetSize());
 }
 
 size_t Buffer::GetSize() const {
@@ -54,6 +54,10 @@ void Buffer::SetSize(size_t size) {
         this->seek_ = size;
 }
 
+void Buffer::Clear() {
+    SetSize(0);
+}
+
 void Buffer::Read(char* destination, size_t size) {
 #ifdef DEBUG
     printf("Reading from buffer (%ld bytes)\n", size);
@@ -63,9 +67,9 @@ void Buffer::Read(char* destination, size_t size) {
     this->seek_ += size;
 }
 
-void Buffer::Write(char* source, size_t size) {
+void Buffer::Append(char* source, size_t size) {
     this->Reserve(size);
-    memcpy(this->GetPointerEnd() - size, source, size);
+    memcpy(this->AtEnd() - size, source, size);
 }
 
 std::istream& operator>>(std::istream& in, Buffer& buffer) {
@@ -77,7 +81,7 @@ std::istream& operator>>(std::istream& in, Buffer& buffer) {
 
     // Extending of buffer.data & writing from stream
     buffer.Reserve(stream_size);
-    in.read(buffer.GetPointerEnd() - stream_size, stream_size);
+    in.read(buffer.AtEnd() - stream_size, stream_size);
 
     return in;
 }
@@ -93,4 +97,14 @@ std::ostream& operator<<(std::ostream& out, Buffer& buffer) {
 Buffer& operator>>(Buffer& buffer, Atomic& atomic) {
     buffer.Read(atomic.getData(), atomic.getSize());
     return buffer;
+}
+
+Buffer& operator<<(Buffer& buffer, Atomic  atomic) {
+    buffer.Append(atomic.getData(), atomic.getSize());
+    return buffer;
+}
+
+Buffer& operator<<(Buffer& destination, Buffer source) {
+    destination.Append(source.AtCurrent(), source.GetLeft());
+    return destination;
 }

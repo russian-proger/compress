@@ -34,19 +34,16 @@ char Atomic::getSize() {
     return this->size_;
 }
 
+void Atomic::setSize(char size) {
+    this->size_ = size;
+}
+
+void Atomic::setData(char* data) {
+    this->data_ = data;
+}
+
 void Atomic::resize(char size) {
     this->free();
     this->data_ = reinterpret_cast<char*>(malloc(size));
     this->size_ = size;
-}
-
-template<typename Atom>
-Atomic Atomic::make(Atom atom) {
-    Atomic atomic;
-    atomic.data_ = reinterpret_cast<char*>(malloc(sizeof(Atom)));
-    atomic.size_ = sizeof(Atom);
-
-    memcpy(atomic.data_, &atom, sizeof(Atom));
-
-    return atomic;
 }

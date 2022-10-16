@@ -16,8 +16,18 @@ public:
     bool  empty();
     char* getData();
     char  getSize();
+    void  setData(char* data);
+    void  setSize(char  size);
     void  resize(char size);
 
     template<typename Atom>
-    static Atomic make(Atom value);
+    static Atomic Make(Atom atom) {
+        Atomic atomic;
+        atomic.setData(reinterpret_cast<char*>(malloc(sizeof(Atom))));
+        atomic.setSize(sizeof(Atom));
+
+        memcpy(atomic.getData(), &atom, sizeof(Atom));
+
+        return atomic;
+    }
 };

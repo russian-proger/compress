@@ -25,9 +25,9 @@ public:
     Buffer Clone();
 
     char* At(size_t index);
+    char* AtBegin();
     char* AtCurrent();
-    char* GetPointerBegin();
-    char* GetPointerEnd();
+    char* AtEnd();
 
     size_t GetSize() const;
     size_t GetSeek() const;
@@ -35,15 +35,18 @@ public:
 
     void SetSeek(size_t seek);
     void SetSize(size_t size);
+    void Clear();
 
-    void Read (char* destination, size_t size);
-    void Write(char* source,      size_t size);
+    void Read  (char* destination, size_t size);
+    void Append(char* source,      size_t size);
 
     char operator[](size_t index) const;
 
     friend std::istream& operator>>(std::istream&, Buffer&);
     friend std::ostream& operator<<(std::ostream&, Buffer&);
 
-    friend Buffer& operator>>(Buffer&, Atomic& atomic);
-    friend Buffer& operator<<(Buffer&, Atomic& atomic);
+    friend Buffer& operator>>(Buffer& destination, Atomic& atomic);
+    friend Buffer& operator<<(Buffer& destination, Atomic  atomic);
+
+    friend Buffer& operator<<(Buffer& destination, Buffer  source);
 };
