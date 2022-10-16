@@ -4,6 +4,7 @@ project(compress)
 
 add_executable(compress
     src/Utilities.cpp
+    src/Atomic.cpp
     src/Buffer.cpp
     src/Compressor.cpp
     src/compressors/HaffmanCompressor.cpp

@@ -19,6 +19,11 @@ char* Buffer::seek() const {
     return this->_seek;
 }
 
+Buffer& Buffer::operator=(Buffer& other) {
+    this->_begin = other._begin;
+    this->_seek  = other._seek;
+    this->_end   = other._end;
+}
 
 void Buffer::seekg(std::streamsize off, std::ios::seekdir skd) {
     if (skd == std::ios::beg) {

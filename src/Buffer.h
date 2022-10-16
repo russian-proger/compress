@@ -24,4 +24,5 @@ public:
     friend std::ostream& operator<<(std::ostream&, Buffer&);
 
     friend Buffer& operator>>(Buffer&, int&);
+    Buffer& operator=(Buffer&);
 };

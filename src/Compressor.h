@@ -23,4 +23,5 @@ public:
     virtual Buffer decompress();
 
     void setBuffer(Buffer);
+    Buffer getBuffer();
 };

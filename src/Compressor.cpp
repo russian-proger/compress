@@ -11,6 +11,9 @@ Compressor::Compressor(Buffer buffer)
 void Compressor::setBuffer(Buffer buffer) {
     this->_buffer = buffer;
 }
+Buffer Compressor::getBuffer() {
+    return this->_buffer;
+}
 
 Buffer Compressor::decompress() {
     Buffer ret;

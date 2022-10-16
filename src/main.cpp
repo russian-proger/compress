@@ -147,6 +147,7 @@ int main(int argc, char **argv)
         int a;
         input_ebuf >> a;
         output_ebuf = input_ebuf;
+        
     }
     else
     {
