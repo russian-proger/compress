@@ -1,9 +1,9 @@
 #include "plain_compressor.h"
 
-Buffer PlainCompressor::Compress() {
+Buffer PlainCompressor::Encode() {
     return this->buffer_;
 }
 
-Buffer PlainCompressor::Decompress() {
+Buffer PlainCompressor::Decode() {
     return this->buffer_;
 }

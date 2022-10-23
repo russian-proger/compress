@@ -1,3 +1,7 @@
 *.cmp
 build
-assets
+examples
+
+# Temporary
+test
+test.cpp

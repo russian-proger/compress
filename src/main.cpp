@@ -11,7 +11,7 @@ void print_help()
     printf("  -o\toutput path\n");
     printf("  -v\toutput detail information\n");
     printf("  -m\tcompress via defined \033[4malgorithms:\033[0m\n");
-    printf("\t\t1 - Haffman code\n");
+    printf("\t\t1 - Huffman code\n");
     printf("\t\t2 - Arithmetic encoding\n");
     printf("\t\t3 - Burrows–Wheeler transform\n");
     printf("\t\t4 - Book stack\n\n");
@@ -25,7 +25,7 @@ int main(int argc, char **argv)
     std::ofstream ofile;    // Output stream
 
     Buffer
-        input_buffer ,  // To read from ifile
+        input_buffer,   // To read from ifile
         output_buffer;  // To write to  ofile
 
     // True if needed to extract compressed file
@@ -142,10 +142,10 @@ int main(int argc, char **argv)
     }
     if (!extract_mode)
     {
-        // Compress mode
+        // Encode mode
 
         Buffer buffer;
-        buffer << Atomic::Make((char)0) << input_buffer;
+        buffer << Atomic::Make((byte)0) << input_buffer;
 
         for (char alg_code : algorithm_order) {
             int ind = (int)alg_code - '0';
@@ -155,8 +155,8 @@ int main(int argc, char **argv)
                 compressors[ind]->SetBuffer(buffer.Clone());
 
                 buffer.Clear();
-                buffer << Atomic::Make((char)ind);
-                buffer << (compressors[ind]->Compress());
+                buffer << Atomic::Make((byte)ind);
+                buffer << (compressors[ind]->Encode());
 
             }
         }
@@ -164,18 +164,18 @@ int main(int argc, char **argv)
         output_buffer = buffer;
     }
     else {
-        Atomic atomic = Atomic::Make((char)0);
-        
+        Atomic atomic = Atomic::Make((byte)0);
+
         Buffer buffer = input_buffer;
         buffer >> atomic;
 
         while (*atomic.GetData() != 0) {
             assert(*atomic.GetData() <= compressors.size());
-            
+
             compressors[*atomic.GetData()]->SetBuffer(buffer.Clone());
-            
+
             buffer.Clear();
-            buffer << compressors[*atomic.GetData()]->Decompress();
+            buffer << compressors[*atomic.GetData()]->Decode();
             buffer >> atomic;
         }
 

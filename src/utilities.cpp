@@ -6,13 +6,13 @@ bool Exists(std::string fname) {
     return (bool)file;
 }
 
-inline bool GetBit(char* src, size_t index) {
+inline bool GetBit(byte* src, size_t index) {
     return src[index/8]>>(index%8);
 }
 
-inline void SetBit(char* src, size_t index, bool value) {
+inline void SetBit(byte* src, size_t index, bool value) {
     if (GetBit(src, index) != value) {
-        src[index/8] ^= ((char)(1<<index%8));
+        src[index/8] ^= ((byte)(1<<index%8));
     }
 }
 

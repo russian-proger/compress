@@ -5,8 +5,8 @@ Atomic::Atomic() {
     this->size_ = 0;
 }
 
-Atomic::Atomic(char size) {
-    this->data_ = reinterpret_cast<char*>(malloc(size));
+Atomic::Atomic(byte size) {
+    this->data_ = reinterpret_cast<byte*>(malloc(size));
     this->size_ = size;
 }
 
@@ -26,24 +26,24 @@ void Atomic::Free() {
     }
 }
 
-char* Atomic::GetData() {
+byte* Atomic::GetData() {
     return this->data_;
 }
 
-char Atomic::GetSize() {
+byte Atomic::GetSize() {
     return this->size_;
 }
 
-void Atomic::SetSize(char size) {
+void Atomic::SetSize(byte size) {
     this->size_ = size;
 }
 
-void Atomic::SetData(char* data) {
+void Atomic::SetData(byte* data) {
     this->data_ = data;
 }
 
-void Atomic::Resize(char size) {
+void Atomic::Resize(byte size) {
     this->Free();
-    this->data_ = reinterpret_cast<char*>(malloc(size));
+    this->data_ = reinterpret_cast<byte*>(malloc(size));
     this->size_ = size;
 }

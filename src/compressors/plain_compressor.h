@@ -1,8 +1,11 @@
 #pragma once
-#include "../compressor.h"
+#include "../byte.h"
 #include "../buffer.h"
+#include "../compressor.h"
+
+using namespace compress;
 
 class PlainCompressor : public Compressor {
-    Buffer   Compress() override;
-    Buffer Decompress() override;
+    Buffer Encode() override;
+    Buffer Decode() override;
 };

@@ -2,7 +2,7 @@
 
 int counter = 0;
 BitBuffer:: BitBuffer(): seek_(0), size_(0) {
-    this->data_ = new std::vector<char>();
+    this->data_ = new std::vector<byte>();
 }
 BitBuffer::~BitBuffer(){}
 
@@ -14,10 +14,10 @@ BitBuffer BitBuffer::Clone() {
     return bit_buffer;
 }
 
-void BitBuffer::SetData(std::vector<char>* data) {
+void BitBuffer::SetData(std::vector<byte>* data) {
     this->data_ = data;
 }
-std::vector<char> BitBuffer::GetData() {
+std::vector<byte> BitBuffer::GetData() {
     return *this->data_;
 }
 
@@ -33,7 +33,7 @@ void BitBuffer::Set(size_t index, bool value) {
     assert(index < this->size_);
 
     if (this->Get(index) != value) {
-        this->data_->at(index/8) ^= ((char)(1<<index%8));
+        this->data_->at(index/8) ^= ((byte)(1<<index%8));
     }
 }
 

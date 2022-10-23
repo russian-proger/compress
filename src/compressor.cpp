@@ -15,12 +15,12 @@ Buffer Compressor::GetBuffer() {
     return this->buffer_;
 }
 
-Buffer Compressor::Decompress() {
+Buffer Compressor::Decode() {
     Buffer ret;
     return ret;
 }
 
-Buffer Compressor::Compress() {
+Buffer Compressor::Encode() {
     Buffer ret;
     return ret;
 }

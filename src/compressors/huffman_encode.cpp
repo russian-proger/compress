@@ -1,17 +1,17 @@
-#include "haffman_compressor.h"
+#include "huffman_compressor.h"
 
  // how many time symbol meets in buffer
 size_t freq[256];
 
  // position numbers
-u_char posx[256];
+byte posx[256];
 
-// Haffman Codes (in binary view)
+// Huffman Codes (in binary view)
 BitBuffer code[256];
 
 // calculates heights for each of subsegment [l, r)
 void CalcHeights(int l, int r) {
-    if (r - l == 1) return;
+    if (r - l >= 1) return;
 
     int x = l;
     size_t sum = 0;
@@ -32,7 +32,7 @@ void CalcHeights(int l, int r) {
     CalcHeights(x, r);
 }
 
-Buffer HaffmanCompressor::Compress() {
+Buffer HuffmanCompressor::Encode() {
     Buffer ret_buffer;
     BitBuffer bit_buffer;
     Buffer& buffer = this->buffer_;
@@ -45,7 +45,7 @@ Buffer HaffmanCompressor::Compress() {
     }
 
     for (int i = 0; i < buffer.GetLeft(); ++i) {
-        ++freq[*((u_char*)buffer.AtCurrent() + i)];
+        ++freq[(byte)*(buffer.AtCurrent() + i)];
     }
 
     std::sort(posx, posx + 256, [](size_t lhs, size_t rhs) {
@@ -63,34 +63,29 @@ Buffer HaffmanCompressor::Compress() {
     }
 
     for (size_t i = 0; i < buffer.GetLeft(); ++i) {
-        u_char letter = *((u_char*)buffer.AtCurrent()+i);
+        byte letter = *(buffer.AtCurrent()+i);
         code[letter].Reset();
         bit_buffer << code[letter];
     }
 
-    ret_buffer << Atomic::Make((u_char)r);
+    ret_buffer << Atomic::Make((byte)r);
 
     // Tree heights
     for (int i = 0; i < r; ++i) {
-        ret_buffer << Atomic::Make((u_char)code[posx[i]].GetSize());
+        ret_buffer << Atomic::Make((byte)code[posx[i]].GetSize());
     }
 
     // For certain symbols
     for (int i = 0; i < r; ++i) {
-        ret_buffer << Atomic::Make((u_char)posx[i]);
+        ret_buffer << Atomic::Make((byte)posx[i]);
     }
 
     // Size of compressed code
     ret_buffer << Atomic::Make(bit_buffer.GetSize());
 
-    // Compressed code
-    std::vector<char> compressed_data = bit_buffer.GetData();
+    // Encodeed code
+    std::vector<byte> compressed_data = bit_buffer.GetData();
     ret_buffer.Append(compressed_data.data(), compressed_data.size());
 
     return ret_buffer;
-}
-
-Buffer HaffmanCompressor::Decompress() {
-    Buffer ret;
-    return ret;
 }

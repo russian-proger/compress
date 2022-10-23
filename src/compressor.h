@@ -19,8 +19,8 @@ public:
     Compressor(Buffer);
     ~Compressor();
 
-    virtual Buffer   Compress();
-    virtual Buffer Decompress();
+    virtual Buffer Encode();
+    virtual Buffer Decode();
 
     void SetBuffer(Buffer);
     Buffer GetBuffer();
