@@ -1,26 +1,41 @@
 #include "compressor.h"
 
-Compressor:: Compressor() {}
+Compressor:: Compressor() {
+    this->source_ = nullptr;
+    this->buffer_ = nullptr;
+    this->output_ = nullptr;
+}
 Compressor::~Compressor() {}
 
-Compressor::Compressor(Buffer buffer)
-{
-    this->buffer_ = buffer;
-}
+void Compressor::Decode() {}
+void Compressor::Encode() {}
 
-void Compressor::SetBuffer(Buffer buffer) {
-    this->buffer_ = buffer;
+Buffer* Compressor::GetSource() {
+    return this->source_;
 }
-Buffer Compressor::GetBuffer() {
+Buffer* Compressor::GetBuffer() {
     return this->buffer_;
 }
-
-Buffer Compressor::Decode() {
-    Buffer ret;
-    return ret;
+Buffer* Compressor::GetOutput() {
+    return this->output_;
 }
 
-Buffer Compressor::Encode() {
-    Buffer ret;
-    return ret;
+void Compressor::SetSource(Buffer *buffer) {
+    this->source_ = buffer;
+}
+void Compressor::SetBuffer(Buffer *buffer) {
+    this->buffer_ = buffer;
+}
+void Compressor::SetOutput(Buffer *buffer) {
+    this->output_ = buffer;
+}
+
+void Compressor::SetSource(Buffer &buffer) {
+    this->source_ = &buffer;
+}
+void Compressor::SetBuffer(Buffer &buffer) {
+    this->buffer_ = &buffer;
+}
+void Compressor::SetOutput(Buffer &buffer) {
+    this->output_ = &buffer;
 }

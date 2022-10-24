@@ -11,6 +11,7 @@
 //  -- count of used symbols (M)
 
 #include <algorithm>
+#include <iostream>
 #include <numeric>
 
 #include "../bitbuffer.h"
@@ -21,6 +22,6 @@
 using namespace compress;
 
 class HuffmanCompressor : public Compressor {
-    Buffer Encode() override;
-    Buffer Decode() override;
+    void Encode() override;
+    void Decode() override;
 };

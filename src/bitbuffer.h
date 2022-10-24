@@ -19,17 +19,17 @@ public:
 
     BitBuffer Clone();
     void SetData(std::vector<byte>* data);
-    std::vector<byte> GetData();
+    std::vector<byte>* GetData();
 
     bool Get(size_t index) const;
     void Set(size_t index, bool value);
 
-    void Reset();
 
     size_t GetSize() const;
     size_t GetSeek() const;
     size_t GetLeft() const;
 
+    void ResetSeek();
     void SetSeek(size_t seek);
     void SetSize(size_t size);
     void Clear();
@@ -38,5 +38,5 @@ public:
 
     bool operator[](size_t index) const;
     friend BitBuffer& operator<<(BitBuffer& bit_buffer, bool value);
-    friend BitBuffer& operator<<(BitBuffer& destination, BitBuffer source);
+    friend BitBuffer& operator<<(BitBuffer& destination, BitBuffer& source);
 };

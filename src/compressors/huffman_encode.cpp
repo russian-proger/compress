@@ -11,7 +11,7 @@ BitBuffer code[256];
 
 // calculates heights for each of subsegment [l, r)
 void CalcHeights(int l, int r) {
-    if (r - l >= 1) return;
+    if (r - l <= 1) return;
 
     int x = l;
     size_t sum = 0;
@@ -32,10 +32,10 @@ void CalcHeights(int l, int r) {
     CalcHeights(x, r);
 }
 
-Buffer HuffmanCompressor::Encode() {
-    Buffer ret_buffer;
+void HuffmanCompressor::Encode() {
     BitBuffer bit_buffer;
-    Buffer& buffer = this->buffer_;
+    Buffer& source = *this->source_;
+    Buffer& output = *this->output_;
 
     std::fill(freq, freq + 256, 0);
     std::iota(posx, posx + 256, 0);
@@ -44,48 +44,46 @@ Buffer HuffmanCompressor::Encode() {
         code[i].Clear();
     }
 
-    for (int i = 0; i < buffer.GetLeft(); ++i) {
-        ++freq[(byte)*(buffer.AtCurrent() + i)];
+    for (int i = 0; i < source.GetLeft(); ++i) {
+        freq[*(source.AtCurrent() + i)]++;
     }
 
     std::sort(posx, posx + 256, [](size_t lhs, size_t rhs) {
         return freq[lhs] > freq[rhs];
     });
 
-    int l = 0, r = 0;
-    while (r < 256 && freq[posx[r]] != 0) {
-        ++r;
+    int m = 0;
+    while (m < 256 && freq[posx[m]] != 0) {
+        ++m;
     }
 
-    CalcHeights(l,r);
+    CalcHeights(0,m);
     for (int i = 0; i < 256; ++i) {
         if (code[posx[i]].GetSize() == 0) continue;
     }
 
-    for (size_t i = 0; i < buffer.GetLeft(); ++i) {
-        byte letter = *(buffer.AtCurrent()+i);
-        code[letter].Reset();
+    for (size_t i = 0; i < source.GetLeft(); ++i) {
+        byte letter = *(source.AtCurrent()+i);
+        code[letter].ResetSeek();
         bit_buffer << code[letter];
     }
 
-    ret_buffer << Atomic::Make((byte)r);
+    output << Atomic::Make((byte)m);
 
     // Tree heights
-    for (int i = 0; i < r; ++i) {
-        ret_buffer << Atomic::Make((byte)code[posx[i]].GetSize());
+    for (int i = 0; i < m; ++i) {
+        output << Atomic::Make((byte)code[posx[i]].GetSize());
     }
 
     // For certain symbols
-    for (int i = 0; i < r; ++i) {
-        ret_buffer << Atomic::Make((byte)posx[i]);
+    for (int i = 0; i < m; ++i) {
+        output << Atomic::Make((byte)posx[i]);
     }
 
     // Size of compressed code
-    ret_buffer << Atomic::Make(bit_buffer.GetSize());
+    output << Atomic::Make(bit_buffer.GetSize());
 
-    // Encodeed code
-    std::vector<byte> compressed_data = bit_buffer.GetData();
-    ret_buffer.Append(compressed_data.data(), compressed_data.size());
-
-    return ret_buffer;
+    // Encoded code
+    std::vector<byte>* compressed_data = bit_buffer.GetData();
+    output.Append(compressed_data->data(), compressed_data->size());
 }

@@ -12,16 +12,27 @@ enum ALGORITHM_TYPE {
 
 class Compressor {
 protected:
-    Buffer buffer_;
+    Buffer
+        *source_, // Read  only
+        *output_, // Write only
+        *buffer_; // Read & Write
 
 public:
     Compressor();
-    Compressor(Buffer);
     ~Compressor();
 
-    virtual Buffer Encode();
-    virtual Buffer Decode();
+    virtual void Encode();
+    virtual void Decode();
 
-    void SetBuffer(Buffer);
-    Buffer GetBuffer();
+    Buffer* GetSource();
+    Buffer* GetBuffer();
+    Buffer* GetOutput();
+
+    void SetSource(Buffer*);
+    void SetBuffer(Buffer*);
+    void SetOutput(Buffer*);
+
+    void SetSource(Buffer&);
+    void SetBuffer(Buffer&);
+    void SetOutput(Buffer&);
 };

@@ -6,6 +6,6 @@
 using namespace compress;
 
 class PlainCompressor : public Compressor {
-    Buffer Encode() override;
-    Buffer Decode() override;
+    void Encode() override;
+    void Decode() override;
 };

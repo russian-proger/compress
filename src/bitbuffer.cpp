@@ -17,8 +17,8 @@ BitBuffer BitBuffer::Clone() {
 void BitBuffer::SetData(std::vector<byte>* data) {
     this->data_ = data;
 }
-std::vector<byte> BitBuffer::GetData() {
-    return *this->data_;
+std::vector<byte>* BitBuffer::GetData() {
+    return this->data_;
 }
 
 
@@ -37,7 +37,7 @@ void BitBuffer::Set(size_t index, bool value) {
     }
 }
 
-void BitBuffer::Reset() {
+void BitBuffer::ResetSeek() {
     this->seek_ = 0;
 }
 
@@ -88,7 +88,7 @@ BitBuffer& operator<<(BitBuffer& bit_buffer, bool value) {
     return bit_buffer;
 }
 
-BitBuffer& operator<<(BitBuffer& destination, BitBuffer source) {
+BitBuffer& operator<<(BitBuffer& destination, BitBuffer& source) {
     while (source.seek_ < source.size_) {
         destination << source[source.seek_];
         source.seek_++;

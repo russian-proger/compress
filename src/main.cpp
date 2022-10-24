@@ -25,8 +25,8 @@ int main(int argc, char **argv)
     std::ofstream ofile;    // Output stream
 
     Buffer
-        input_buffer,   // To read from ifile
-        output_buffer;  // To write to  ofile
+        input_buffer,    // To read from ifile
+        output_buffer;   // To write to  ofile
 
     // True if needed to extract compressed file
     bool extract_mode = false;
@@ -145,46 +145,52 @@ int main(int argc, char **argv)
         // Encode mode
 
         Buffer buffer;
-        buffer << Atomic::Make((byte)0) << input_buffer;
+        output_buffer << Atomic::Make((byte)0);
 
         for (char alg_code : algorithm_order) {
             int ind = (int)alg_code - '0';
-            
+
             if (ind <= compressors.size()) {
+                // Applying compressor
 
-                compressors[ind]->SetBuffer(buffer.Clone());
+                Compressor *compressor = compressors[ind];
+                compressor->SetSource(&input_buffer);
+                compressor->SetBuffer(&buffer);
+                compressor->SetOutput(&output_buffer);
 
-                buffer.Clear();
-                buffer << Atomic::Make((byte)ind);
-                buffer << (compressors[ind]->Encode());
+                output_buffer << Atomic::Make((byte)ind);
 
+                compressor->Encode();
+
+                std::swap(input_buffer, output_buffer);
+                output_buffer.Clear();
             }
         }
 
-        output_buffer = buffer;
+        std::swap(input_buffer, output_buffer);
     }
     else {
-        Atomic atomic = Atomic::Make((byte)0);
+        // Atomic atomic = Atomic::Make((byte)0);
 
-        Buffer buffer = input_buffer;
-        buffer >> atomic;
+        // Buffer buffer = input_buffer;
+        // buffer >> atomic;
 
-        while (*atomic.GetData() != 0) {
-            assert(*atomic.GetData() <= compressors.size());
+        // while (*atomic.GetData() != 0) {
+        //     assert(*atomic.GetData() <= compressors.size());
 
-            compressors[*atomic.GetData()]->SetBuffer(buffer.Clone());
+        //     compressors[*atomic.GetData()]->SetBuffer(buffer);
 
-            buffer.Clear();
-            buffer << compressors[*atomic.GetData()]->Decode();
-            buffer >> atomic;
-        }
+        //     buffer.Clear();
+        //     buffer << compressors[*atomic.GetData()]->Decode();
+        //     buffer >> atomic;
+        // }
 
-        output_buffer = buffer;
+        // output_buffer = buffer;
     }
 
     try {
         ofile.open(opath, std::ios::binary);
-        ofile << output_buffer;
+        // ofile << output_buffer;
         ofile.close();
     }
     catch (const std::exception &e) {

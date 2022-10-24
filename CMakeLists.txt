@@ -17,7 +17,7 @@ add_executable(compress
 if (CMAKE_BUILD_TYPE)
     if(CMAKE_BUILD_TYPE STREQUAL "Debug")
         add_definitions(-DDEBUG)
+    elseif(CMAKE_BUILD_TYPE STREQUAL "Release")
+        add_definitions(-O3)
     endif()
 endif()
-
-add_definitions(-O3)
