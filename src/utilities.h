@@ -1,14 +1,16 @@
+#pragma once
+
 #include <iostream>
 #include <fstream>
 
 #include "byte.h"
 
-using namespace compress;
+namespace cmp {
+    bool Exists(std::string fname);
 
-bool Exists(std::string fname);
+    bool GetBit(byte* src, size_t index);
 
-inline bool GetBit(bool* src, size_t index);
+    void SetBit(byte* src, size_t index, bool value);
 
-inline void SetBit(byte* src, size_t index, bool value);
-
-std::streamsize GetRemainingSize(std::istream& stream);
+    std::streamsize GetRemainingSize(std::istream& stream);
+}

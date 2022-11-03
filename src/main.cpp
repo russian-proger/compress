@@ -2,6 +2,8 @@
 #include "buffer.h"
 #include "compressors/compressors.h"
 
+using namespace cmp;
+
 void print_help()
 {
     printf("\033[1mUsage\033[0m: compress [OPTION]... FILE\n\n");
@@ -133,8 +135,6 @@ int main(int argc, char **argv)
 
     try {
         ifile.open(ipath, std::ios::binary);
-        ifile >> input_buffer;
-        ifile.close();
     }
     catch (const std::exception &e) {
         printf("\033[1;31mError while reading:\033[0m %s", e.what());
@@ -143,12 +143,19 @@ int main(int argc, char **argv)
     if (!extract_mode)
     {
         // Encode mode
+        input_buffer << Atomic::Make((byte)0);
+        ifile >> input_buffer;
+        ifile.close();
+
+
 
         Buffer buffer;
-        output_buffer << Atomic::Make((byte)0);
 
         for (char alg_code : algorithm_order) {
             int ind = (int)alg_code - '0';
+            
+            // Skip when trying to get plain compressor
+            if (ind == 0) continue;
 
             if (ind <= compressors.size()) {
                 // Applying compressor
@@ -170,27 +177,36 @@ int main(int argc, char **argv)
         std::swap(input_buffer, output_buffer);
     }
     else {
-        // Atomic atomic = Atomic::Make((byte)0);
+        ifile >> input_buffer;
+        ifile.close();
 
-        // Buffer buffer = input_buffer;
-        // buffer >> atomic;
+        Atomic atomic = Atomic::Make((byte)0);
+        Buffer buffer;
 
-        // while (*atomic.GetData() != 0) {
-        //     assert(*atomic.GetData() <= compressors.size());
+        input_buffer >> atomic;
 
-        //     compressors[*atomic.GetData()]->SetBuffer(buffer);
+        while (*atomic.GetData() != 0) {
+            assert(*atomic.GetData() <= compressors.size());
 
-        //     buffer.Clear();
-        //     buffer << compressors[*atomic.GetData()]->Decode();
-        //     buffer >> atomic;
-        // }
+            Compressor *compressor = compressors[*atomic.GetData()];
+            compressor->SetSource(&input_buffer);
+            compressor->SetBuffer(&buffer);
+            compressor->SetOutput(&output_buffer);
 
-        // output_buffer = buffer;
+            compressor->Decode();
+
+            std::swap(input_buffer, output_buffer);
+            output_buffer.Clear();
+
+            input_buffer >> atomic;
+        }
+
+        std::swap(input_buffer, output_buffer);
     }
 
     try {
         ofile.open(opath, std::ios::binary);
-        // ofile << output_buffer;
+        ofile << output_buffer;
         ofile.close();
     }
     catch (const std::exception &e) {

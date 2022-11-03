@@ -7,12 +7,10 @@
 #include "atomic.h"
 #include "utilities.h"
 
-using namespace compress;
-
 class Buffer {
 private:
-    // Stores stream bytes
-    std::vector<byte> data_;
+    // Stores stream cmp::bytes
+    std::vector<cmp::byte> data_;
 
     // Current pointer position
     size_t seek_;
@@ -25,10 +23,10 @@ public:
 
     Buffer Clone();
 
-    byte* At(size_t index);
-    byte* AtBegin();
-    byte* AtCurrent();
-    byte* AtEnd();
+    cmp::byte* At(size_t index);
+    cmp::byte* AtBegin();
+    cmp::byte* AtCurrent();
+    cmp::byte* AtEnd();
 
     size_t GetSize() const;
     size_t GetSeek() const;
@@ -38,16 +36,17 @@ public:
     void SetSize(size_t size);
     void Clear();
 
-    void Read  (byte* destination, size_t size);
-    void Append(byte* source,      size_t size);
+    void Read  (cmp::byte* destination, size_t size);
+    void Append(cmp::byte* source,      size_t size);
 
-    byte operator[](size_t index) const;
+    cmp::byte operator[](size_t index) const;
 
     friend std::istream& operator>>(std::istream&, Buffer&);
     friend std::ostream& operator<<(std::ostream&, Buffer&);
 
-    friend Buffer& operator>>(Buffer& destination, Atomic& atomic);
-    friend Buffer& operator<<(Buffer& destination, Atomic  atomic);
+    friend Buffer& operator>>(Buffer& source, Atomic&  atomic);
+    friend Buffer& operator>>(Buffer& source, Atomic&& atomic);
+    friend Buffer& operator<<(Buffer& destination, Atomic&& atomic);
 
-    friend Buffer& operator<<(Buffer& destination, Buffer  source);
+    friend Buffer& operator<<(Buffer& destination, Buffer& source);
 };

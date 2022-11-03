@@ -1,5 +1,7 @@
 #include "bitbuffer.h"
 
+using namespace cmp;
+
 int counter = 0;
 BitBuffer:: BitBuffer(): seek_(0), size_(0) {
     this->data_ = new std::vector<byte>();

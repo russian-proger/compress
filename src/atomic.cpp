@@ -1,5 +1,7 @@
 #include "atomic.h"
 
+using namespace cmp;
+
 Atomic::Atomic() {
     this->data_ = nullptr;
     this->size_ = 0;

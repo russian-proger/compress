@@ -1,5 +1,7 @@
 #include "buffer.h"
 
+using namespace cmp;
+
 Buffer:: Buffer(): seek_(0){}
 Buffer::~Buffer(){}
 
@@ -94,17 +96,22 @@ std::ostream& operator<<(std::ostream& out, Buffer& buffer) {
     return out;
 }
 
-Buffer& operator>>(Buffer& buffer, Atomic& atomic) {
+Buffer& operator>>(Buffer& buffer, Atomic&  atomic) {
     buffer.Read(atomic.GetData(), atomic.GetSize());
     return buffer;
 }
 
-Buffer& operator<<(Buffer& buffer, Atomic  atomic) {
+Buffer& operator>>(Buffer& buffer, Atomic&& atomic) {
+    buffer.Read(atomic.GetData(), atomic.GetSize());
+    return buffer;
+}
+
+Buffer& operator<<(Buffer& buffer, Atomic&& atomic) {
     buffer.Append(atomic.GetData(), atomic.GetSize());
     return buffer;
 }
 
-Buffer& operator<<(Buffer& destination, Buffer source) {
+Buffer& operator<<(Buffer& destination, Buffer& source) {
     destination.Append(source.AtCurrent(), source.GetLeft());
     return destination;
 }

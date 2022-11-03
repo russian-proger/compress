@@ -1,33 +1,33 @@
 #pragma once
+
+#include <iostream>
 #include <malloc.h>
 #include <memory.h>
 
 #include "byte.h"
 
-using namespace compress;
-
 class Atomic {
 private:
-    byte* data_;
-    byte  size_;
+    cmp::byte* data_;
+    cmp::byte  size_;
 
 public:
     Atomic();
-    Atomic(byte size);
+    Atomic(cmp::byte size);
     ~Atomic();
 
     void  Free();
     bool  Empty();
-    byte* GetData();
-    byte  GetSize();
-    void  SetData(byte* data);
-    void  SetSize(byte  size);
-    void  Resize(byte size);
+    cmp::byte* GetData();
+    cmp::byte  GetSize();
+    void  SetData(cmp::byte* data);
+    void  SetSize(cmp::byte  size);
+    void  Resize (cmp::byte  size);
 
     template<typename Atom>
-    static Atomic Make(Atom atom) {
+    static Atomic Make(Atom&& atom) { // Possibly one &
         Atomic atomic;
-        atomic.SetData(reinterpret_cast<byte*>(new Atom()));
+        atomic.SetData(reinterpret_cast<cmp::byte*>(new Atom()));
         atomic.SetSize(sizeof(Atom));
 
         memcpy(atomic.GetData(), &atom, sizeof(Atom));

@@ -6,11 +6,9 @@
 
 #include "byte.h"
 
-using namespace compress;
-
 class BitBuffer {
 private:
-    std::vector<byte>* data_;
+    std::vector<cmp::byte>* data_;
     size_t seek_, size_;
 
 public:
@@ -18,8 +16,8 @@ public:
     ~BitBuffer();
 
     BitBuffer Clone();
-    void SetData(std::vector<byte>* data);
-    std::vector<byte>* GetData();
+    void SetData(std::vector<cmp::byte>* data);
+    std::vector<cmp::byte>* GetData();
 
     bool Get(size_t index) const;
     void Set(size_t index, bool value);

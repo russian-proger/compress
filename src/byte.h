@@ -1,5 +1,5 @@
 #pragma once
 
-namespace compress {
+namespace cmp {
     typedef unsigned char byte;
 }

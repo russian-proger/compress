@@ -1,4 +1,6 @@
-#include "plain_compressor.h"
+#include "plain.h"
+
+using namespace cmp;
 
 void PlainCompressor::Encode() {
 }
