@@ -22,7 +22,7 @@ uint16_t timer = 0;
 void CalcHeights(int l, int r, uint16_t v=0) {
     if (r - l <= 1) {
         term[v] = 1;
-        leaf[v] = l;
+        leaf[v] = posx[l];
         return;
     }
 
@@ -78,7 +78,7 @@ void HuffmanCompressor::Encode() {
     }
 
     for (size_t i = 0; i < source.GetLeft(); ++i) {
-        byte letter = *(source.AtCurrent()+i);
+        byte& letter = *(source.AtCurrent()+i);
         code[letter].ResetSeek();
         bit_buffer << code[letter];
     }
@@ -103,10 +103,6 @@ void HuffmanCompressor::Decode() {
 
     for (size_t i = 0; i < 256; ++i) {
         code[i].Clear();
-    }
-
-    for (size_t i = 0; i < source.GetLeft(); ++i) {
-        freq[*(source.AtCurrent() + i)]++;
     }
 
     std::sort(posx, posx + 256, [](const size_t& lhs, const size_t& rhs) {
@@ -136,6 +132,5 @@ void HuffmanCompressor::Decode() {
         }
 
         output << Atomic::Make((byte)leaf[v]);
-        std::cout << "Extracted: " << (int)leaf[v] << std::endl;
     }
 }
