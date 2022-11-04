@@ -1,7 +1,7 @@
 #pragma once
 
 // Scheme of compressed sequence:
-// [4x256 bytes] [8 bytes] [N bytes]
+// [4x256 bytes] [4 bytes] [N bytes]
 //  ^~~~~~~~~~~   ^~~~~~~   ^~~~~~~
 //  |             |         |
 //  |             |         +- compressed data
@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <iostream>
 #include <numeric>
+#include <vector>
 
 #include "../bitbuffer.h"
 #include "../buffer.h"
@@ -20,7 +21,7 @@
 #include "../compressor.h"
 #include "../utilities.h"
 
-class HuffmanCompressor : public Compressor {
+class ArithmeticCompressor : public Compressor {
     void Encode() override;
     void Decode() override;
 };

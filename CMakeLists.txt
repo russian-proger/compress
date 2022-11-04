@@ -8,6 +8,7 @@ add_executable(compress
     src/buffer.cpp
     src/bitbuffer.cpp
     src/compressor.cpp
+    src/compressors/arithmetic.cpp
     src/compressors/huffman.cpp
     src/compressors/plain.cpp
     src/main.cpp

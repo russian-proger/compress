@@ -3,20 +3,20 @@
 using namespace cmp;
 
  // how many time symbol meets in buffer
-uint32_t freq[256];
+static uint32_t freq[256];
 
  // position numbers
-byte posx[256];
+static byte posx[256];
 
 // Huffman Codes (in binary view)
-BitBuffer code[256];
+static BitBuffer code[256];
 
 // For Huffman-Tree
-byte leaf[1024]; // Char code
-bool term[1024]; // Is Leaf
-uint16_t left [1024];
-uint16_t right[1024];
-uint16_t timer = 0;
+static byte leaf[1024]; // Char code
+static bool term[1024]; // Is Leaf
+static uint16_t left [1024];
+static uint16_t right[1024];
+static uint16_t timer = 0;
 
 // calculates heights for each of subsegment [l, r)
 void CalcHeights(int l, int r, uint16_t v=0) {

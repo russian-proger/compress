@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     bool extract_mode = false;
 
     // Sequence of numbers, indicating order of compress algorithm
-    std::string algorithm_order = "1";
+    std::string algorithm_order = "2";
 
     // If true, program will be printing detail information
     bool vendor = false;
