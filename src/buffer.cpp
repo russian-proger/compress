@@ -32,6 +32,10 @@ byte* Buffer::AtEnd() {
     return this->At(this->GetSize());
 }
 
+std::vector<byte>& Buffer::Data() {
+    return this->data_;
+}
+
 size_t Buffer::GetSize() const {
     return this->data_.size();
 }
@@ -61,9 +65,6 @@ void Buffer::Clear() {
 }
 
 void Buffer::Read(byte* destination, size_t size) {
-#ifdef DEBUG
-    printf("Reading from buffer (%ld bytes)\n", size);
-#endif
     assert(this->GetSeek() + size <= this->GetSize());
     memcpy(destination, this->AtCurrent(), size);
     this->seek_ += size;

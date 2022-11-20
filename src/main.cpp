@@ -34,7 +34,7 @@ int main(int argc, char **argv)
     bool extract_mode = false;
 
     // Sequence of numbers, indicating order of compress algorithm
-    std::string algorithm_order = "2";
+    std::string algorithm_order = "4";
 
     // If true, program will be printing detail information
     bool vendor = false;
@@ -64,6 +64,7 @@ int main(int argc, char **argv)
                     case 'm':
                     {
                         flag = FLAG::ALGORITHM_ORDER;
+                        break;
                     }
 
                     // Output path
@@ -111,6 +112,7 @@ int main(int argc, char **argv)
         printf("\033[1;31mError:\033[0m %s", e.what());
         return 0;
     }
+    std::cout << "Algorithm: " << algorithm_order << "\n";
 
     if (ipath == "")
     {
@@ -186,6 +188,7 @@ int main(int argc, char **argv)
         input_buffer >> atomic;
 
         while (*atomic.GetData() != 0) {
+            std::cout << "ALgo: " << (int)*atomic.GetData() << "\n";
             assert(*atomic.GetData() <= compressors.size());
 
             Compressor *compressor = compressors[*atomic.GetData()];

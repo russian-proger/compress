@@ -25,7 +25,7 @@ public:
     void  Resize (cmp::byte  size);
 
     template<typename Atom>
-    static Atomic Make(Atom&& atom) { // Possibly one &
+    static Atomic Make(Atom atom) { // Possibly one &
         Atomic atomic;
         atomic.SetData(reinterpret_cast<cmp::byte*>(new Atom()));
         atomic.SetSize(sizeof(Atom));

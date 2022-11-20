@@ -28,6 +28,8 @@ public:
     cmp::byte* AtCurrent();
     cmp::byte* AtEnd();
 
+    std::vector<cmp::byte>& Data();
+
     size_t GetSize() const;
     size_t GetSeek() const;
     size_t GetLeft() const;

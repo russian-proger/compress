@@ -12,5 +12,7 @@ namespace cmp {
 
     void SetBit(byte* src, size_t index, bool value);
 
+    uint64_t ReverseBits(uint64_t v);
+
     std::streamsize GetRemainingSize(std::istream& stream);
 }
