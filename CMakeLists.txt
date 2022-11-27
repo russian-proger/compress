@@ -13,6 +13,7 @@ add_executable(compress
     src/compressors/huffman.cpp
     src/compressors/plain.cpp
     src/compressors/bwt.cpp
+    src/compressors/rle.cpp
     src/main.cpp
 )
 

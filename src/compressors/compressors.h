@@ -8,27 +8,27 @@
 #include "bwt.h"
 #include "huffman.h"
 #include "plain.h"
+#include "rle.h"
 
 std::vector<Compressor*> compressors = {
     new PlainCompressor(),
     new HuffmanCompressor(),
-    new ArithmeticCompressor(),
+    new Arithmetic2Compressor(),
     new BWTCompressor(),
-    new Arithmetic2Compressor()
+    new RLECompressor(),
 };
 
 // @todo
 std::map<std::string, Compressor*> mcompressors = {
     { "plain", new PlainCompressor() },
     { "huffman", new HuffmanCompressor() },
-    { "arithmetic", new ArithmeticCompressor() },
-    { "bwt", new BWTCompressor() },
-    { "arithmetic2", new Arithmetic2Compressor() }
+    { "arithmetic", new Arithmetic2Compressor() },
+    { "bwt", new BWTCompressor() }
 };
 
-// Arithmetic
-// Haffman
+// - Arithmetic
+// - Haffman
 // LZ
 // RLE
-// BRW
-// SK
+// - BRW
+// * SK

@@ -15,7 +15,6 @@
 #include <numeric>
 #include <vector>
 
-#include "../bitbuffer.h"
 #include "../buffer.h"
 #include "../byte.h"
 #include "../compressor.h"
