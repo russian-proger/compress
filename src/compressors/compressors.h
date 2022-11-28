@@ -5,6 +5,7 @@
 #include <vector>
 #include "arithmetic.h"
 #include "arithmetic2.h"
+#include "bookstack.h"
 #include "bwt.h"
 #include "huffman.h"
 #include "plain.h"
@@ -16,6 +17,7 @@ std::vector<Compressor*> compressors = {
     new Arithmetic2Compressor(),
     new BWTCompressor(),
     new RLECompressor(),
+    new BSCompressor(),
 };
 
 // @todo

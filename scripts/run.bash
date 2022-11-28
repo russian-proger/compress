@@ -23,7 +23,7 @@ fi
 
 echo "Compressing"
 echo
-build/compress $SOURCE_FILE -o $MIDDLE_FILE -m 4
+build/compress $SOURCE_FILE -o $MIDDLE_FILE -m 5
 echo
 echo "Unpacking"
 echo
