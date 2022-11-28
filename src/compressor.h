@@ -17,12 +17,14 @@ protected:
         *output_, // Write only
         *buffer_; // Read & Write
 
+
 public:
     Compressor();
     ~Compressor();
 
     virtual void Encode();
     virtual void Decode();
+    virtual void PrintInfo();
 
     Buffer* GetSource();
     Buffer* GetBuffer();
@@ -35,4 +37,5 @@ public:
     void SetSource(Buffer&);
     void SetBuffer(Buffer&);
     void SetOutput(Buffer&);
+
 };

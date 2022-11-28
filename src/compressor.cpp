@@ -9,6 +9,7 @@ Compressor::~Compressor() {}
 
 void Compressor::Decode() {}
 void Compressor::Encode() {}
+void Compressor::PrintInfo() {}
 
 Buffer* Compressor::GetSource() {
     return this->source_;

@@ -18,6 +18,11 @@ static uint16_t left [1024];
 static uint16_t right[1024];
 static uint16_t timer = 0;
 
+
+void HuffmanCompressor::PrintInfo() {
+    std::cout << "Huffman Compressor\n";
+}
+
 // calculates heights for each of subsegment [l, r)
 void CalcHeights(int l, int r, uint16_t v=0) {
     if (r - l <= 1) {

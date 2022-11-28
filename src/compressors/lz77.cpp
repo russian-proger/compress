@@ -4,6 +4,11 @@ using namespace cmp;
 
 static const int64_t WINDOW_SIZE = 128;
 
+
+void LZ77Compressor::PrintInfo() {
+    std::cout << "Lempel-Ziv Compressor\n";
+}
+
 void LZ77Compressor::Encode() {
     Buffer& source = *this->source_;
     auto& vec_out = this->output_->Data();

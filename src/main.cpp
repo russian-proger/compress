@@ -17,6 +17,8 @@ void print_help()
     printf("\t\t2 - Arithmetic encoding\n");
     printf("\t\t3 - Burrows–Wheeler transform\n");
     printf("\t\t4 - Book stack\n\n");
+    printf("\t\t5 - RLE\n\n");
+    printf("\t\t6 - LZ 77\n\n");
 }
 
 int main(int argc, char **argv)
@@ -112,7 +114,6 @@ int main(int argc, char **argv)
         printf("\033[1;31mError:\033[0m %s", e.what());
         return 0;
     }
-    std::cout << "Algorithm: " << algorithm_order << "\n";
 
     if (ipath == "")
     {
@@ -142,6 +143,9 @@ int main(int argc, char **argv)
         printf("\033[1;31mError while reading:\033[0m %s", e.what());
         return 0;
     }
+
+    int64_t total_clock = clock();
+
     if (!extract_mode)
     {
         // Encode mode
@@ -155,13 +159,15 @@ int main(int argc, char **argv)
 
         for (char alg_code : algorithm_order) {
             int ind = (int)alg_code - '0';
+
+            std::cout << "Algorithm: ";
+            compressors[ind]->PrintInfo();
             
             // Skip when trying to get plain compressor
             if (ind == 0) continue;
 
             if (ind <= compressors.size()) {
                 // Applying compressor
-
                 Compressor *compressor = compressors[ind];
                 compressor->SetSource(&input_buffer);
                 compressor->SetBuffer(&buffer);
@@ -169,7 +175,10 @@ int main(int argc, char **argv)
 
                 output_buffer << Atomic::Make((byte)ind);
 
+                int64_t start_time = clock();
                 compressor->Encode();
+
+                std::cout <<  "Duration: " << (long double)(clock() - start_time) / 1e6 << "s\n\n";
 
                 std::swap(input_buffer, output_buffer);
                 output_buffer.Clear();
@@ -188,8 +197,10 @@ int main(int argc, char **argv)
         input_buffer >> atomic;
 
         while (*atomic.GetData() != 0) {
-            std::cout << "ALgo: " << (int)*atomic.GetData() << "\n";
             assert(*atomic.GetData() <= compressors.size());
+
+            std::cout << "Algorithm: ";
+            compressors[*atomic.GetData()]->PrintInfo();
 
             Compressor *compressor = compressors[*atomic.GetData()];
             compressor->SetSource(&input_buffer);
@@ -207,6 +218,7 @@ int main(int argc, char **argv)
         std::swap(input_buffer, output_buffer);
     }
 
+
     try {
         ofile.open(opath, std::ios::binary);
         ofile << output_buffer;
@@ -216,4 +228,6 @@ int main(int argc, char **argv)
         printf("\033[1;31mError while writing:\033[0m %s", e.what());
         return 0;
     }
+
+    std::cout << "Total execution time: " << (long double)(clock() - total_clock) / 1e6 << "s\n";
 }

@@ -23,4 +23,5 @@
 class HuffmanCompressor : public Compressor {
     void Encode() override;
     void Decode() override;
+    void PrintInfo() override;
 };

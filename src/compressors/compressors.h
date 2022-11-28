@@ -17,17 +17,9 @@ std::vector<Compressor*> compressors = {
     new HuffmanCompressor(),
     new Arithmetic2Compressor(),
     new BWTCompressor(),
-    new RLECompressor(),
     new BSCompressor(),
+    new RLECompressor(),
     new LZ77Compressor()
-};
-
-// @todo
-std::map<std::string, Compressor*> mcompressors = {
-    { "plain", new PlainCompressor() },
-    { "huffman", new HuffmanCompressor() },
-    { "arithmetic", new Arithmetic2Compressor() },
-    { "bwt", new BWTCompressor() }
 };
 
 // + Arithmetic

@@ -2,6 +2,10 @@
 
 using namespace cmp;
 
+void RLECompressor::PrintInfo() {
+    std::cout << "RLE (Run-Length) Compressor\n";
+}
+
 void RLECompressor::Encode() {
     Buffer& source = *this->GetSource();
     byte* input = source.AtCurrent();

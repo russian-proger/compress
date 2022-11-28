@@ -4,6 +4,10 @@ using namespace cmp;
 
 static constexpr size_t LIM = (1ull<<15);
 
+void BWTCompressor::PrintInfo() {
+    std::cout << "Burrows-Wheeler Transform\n";
+}
+
 void CountSort(const int &size, int *&SA, int *&RA, int *&tempSA, int *&cnt) {
     int ra_max = std::max(512, size);
     std::fill(cnt, cnt + ra_max, 0);

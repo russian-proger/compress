@@ -5,6 +5,10 @@ using namespace cmp;
 static uint32_t freq[256];
 static uint32_t part[257];
 
+void Arithmetic2Compressor::PrintInfo() {
+    std::cout << "Arithmetic (Interval) Compressor\n";
+}
+
 void Arithmetic2Compressor::Encode() {
     Buffer& source = *this->source_;
     Buffer& output = *this->output_;

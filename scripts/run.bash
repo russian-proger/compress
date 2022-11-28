@@ -21,14 +21,22 @@ else
     OUTPUT_FILE=examples/utext.txt
 fi
 
-echo "Compressing"
 echo
-build/compress $SOURCE_FILE -o $MIDDLE_FILE -m 356
+echo -e "\033[30;41m""Compressing""\033[0m"
 echo
-echo "Unpacking"
+build/compress $SOURCE_FILE -o $MIDDLE_FILE -m 4
+echo
+echo -e "\033[30;43m""Unpacking""\033[0m"
 echo
 build/compress -x -o $OUTPUT_FILE $MIDDLE_FILE
+echo 
+echo -e "\033[30;42m""Checksums""\033[0m"
 echo
-echo Checksums
 echo "Source File: $(sha256sum $SOURCE_FILE)"
 echo "Output File: $(sha256sum $OUTPUT_FILE)"
+echo
+echo -e "\033[30;44m""Size of files""\033[0m"
+echo -e "\033[36;40m""source file: ""\033[0m" $(du -h $SOURCE_FILE)
+echo -e "\033[36;40m""middle file: ""\033[0m" $(du -h $MIDDLE_FILE)
+echo -e "\033[36;40m""output file: ""\033[0m" $(du -h $OUTPUT_FILE)
+echo

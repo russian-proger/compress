@@ -5,6 +5,10 @@ using namespace cmp;
 static byte STACK[256];
 
 
+void BSCompressor::PrintInfo() {
+    std::cout << "Book-Stack (Move-to-Front) Transform\n";
+}
+
 inline byte DeMoveUp(const byte &v) {
     int ret = STACK[v];
     for (int i = v; i > 0; --i) STACK[i] = std::move(STACK[i-1]);
