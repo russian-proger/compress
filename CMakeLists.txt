@@ -12,6 +12,7 @@ add_executable(compress
     src/compressors/arithmetic2.cpp
     src/compressors/bookstack.cpp
     src/compressors/huffman.cpp
+    src/compressors/lz77.cpp
     src/compressors/plain.cpp
     src/compressors/bwt.cpp
     src/compressors/rle.cpp

@@ -8,6 +8,7 @@
 #include "bookstack.h"
 #include "bwt.h"
 #include "huffman.h"
+#include "lz77.h"
 #include "plain.h"
 #include "rle.h"
 
@@ -18,6 +19,7 @@ std::vector<Compressor*> compressors = {
     new BWTCompressor(),
     new RLECompressor(),
     new BSCompressor(),
+    new LZ77Compressor()
 };
 
 // @todo
@@ -28,9 +30,9 @@ std::map<std::string, Compressor*> mcompressors = {
     { "bwt", new BWTCompressor() }
 };
 
-// - Arithmetic
-// - Haffman
-// LZ
-// RLE
-// - BRW
-// * SK
+// + Arithmetic
+// + Haffman
+// + LZ
+// + RLE
+// + BRW
+// + SK
